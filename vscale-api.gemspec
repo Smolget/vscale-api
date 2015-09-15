@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "vscale-api"
   spec.version       = Vscale::Api::VERSION
   spec.authors       = ["Ilya V"]
-  spec.email         = ["wim-norder@ya.ru"]
+  spec.email         = ["ilya@codeplay.ru"]
 
   spec.summary       = ""
   spec.description   = ""
