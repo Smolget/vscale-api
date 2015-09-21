@@ -25,8 +25,12 @@ module Vscale
         uri = URI.parse(@api_endpoint)
 
         @http = Net::HTTP.start(uri.host, uri.port, :use_ssl => true)
-        @http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        @http.ssl_version = :SSLv3
+        @http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+        @http.ssl_version = :TLSv1_2 #:SSLv23
+
+        #http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+        #http.ssl_version = :SSLv23
+        #http.request req
       end
 
       def get(path, params = {})
@@ -236,33 +240,16 @@ module Vscale
         self.post("tickets/#{id}/close")
       end
 
-      #protected
-      def request_old(param = '')
-        url = URI.parse(@api_endpoint + param[:method].to_s)
 
-        req = Net::HTTP::Get.new url.path
-        req.add_field("Accept", "application/json, text/plain")
-        req.add_field("Content-Type", 'application/json')
-        req.add_field("X-Token", @token)
-
-        #response = Net::HTTP.post_form(URI.parse(API_ENDPOINT), params.map(&:to_a).map{|x| x.join('=')}.join('&') )
-
-        response = Net::HTTP.start(url.host, url.port, :use_ssl => true) do |http|
-          http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-          http.ssl_version = :SSLv3
-          http.request req
-        end
-
-        response.body
-      end
-
-      #private
+      private
 
       def request_json(method, path, params)
         response = request(method, path, params)
+
         body = JSON.parse(response.body)
 
         OpenStruct.new(:code => response.code, :body => body)
+
       rescue JSON::ParserError
         response
       end
@@ -275,14 +262,14 @@ module Vscale
             request["Accept"] = "application/json, text/plain"
             request["Content-Type"] = 'application/json'
             request["X-Token"] = @token
-            p full_path
+            p full_path # TODO: development
           else
             full_path = encode_path_params(@api_endpoint + path, params)
             request = VERB_MAP[method.to_sym].new(full_path)
             request["Accept"] = "application/json, text/plain"
             request["Content-Type"] = 'application/json'
             request["X-Token"] = @token
-            p full_path
+            p full_path # TODO: development
         end
 
         @http.request(request)
