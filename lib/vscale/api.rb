@@ -9,7 +9,7 @@ module Vscale
   module Api
     class Client
 
-      API_ENDPOINT = 'https://api.vscale.io/v1/'
+      API_ENDPOINT = 'https://api.vscale.io/v1/'.freeze
 
       VERB_MAP = {
           :get    => Net::HTTP::Get,
@@ -27,10 +27,6 @@ module Vscale
         @http = Net::HTTP.start(uri.host, uri.port, :use_ssl => true)
         @http.verify_mode = OpenSSL::SSL::VERIFY_PEER
         @http.ssl_version = :TLSv1_2 #:SSLv23
-
-        #http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-        #http.ssl_version = :SSLv23
-        #http.request req
       end
 
       def get(path, params = {})
