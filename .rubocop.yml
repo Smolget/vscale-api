@@ -1,8 +1,8 @@
 Documentation:
   Enabled: false
 
-Style/*:
-  EnforcedStyle: mixed
+AllCops:
   Exclude:
     - Guardfile
-
+    - Rakefile
+    - vscale-api.gemspec

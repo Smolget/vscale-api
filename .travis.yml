@@ -1,4 +1,13 @@
 language: ruby
+cache: bundler
+
 rvm:
   - 2.2.2
   - 2.2.3
+
+notifications:
+  email:
+    recipients:
+      - ilya@codeplay.ru
+    on_failure: change
+    on_success: never

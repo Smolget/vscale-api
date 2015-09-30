@@ -1,7 +1,9 @@
 require 'bundler/setup'
+require 'coveralls'
 Bundler.setup
+Coveralls.wear!
 
-require 'vscale/api' # and any other gems you need
+require 'vscale/api'
 
 # RSpec.configure do |config|
 # some (optional) config here
