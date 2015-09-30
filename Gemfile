@@ -1,4 +1,7 @@
 source 'https://rubygems.org'
-
-# Specify your gem's dependencies in ruby-vscale-api.gemspec
 gemspec
+
+group :development do
+  gem 'guard-rspec', require: false
+  gem 'guard-rubocop'
+end
