@@ -1,282 +1,182 @@
-require "vscale/api/version"
-require "net/http"
-require "openssl"
-require "ostruct"
-require "json"
-require "uri"
+require 'vscale/api/version'
+require 'net/http'
+require 'openssl'
+require 'ostruct'
+require 'json'
+require 'uri'
+
+require 'vscale/api/request'
+require 'vscale/api/tokens'
+require 'vscale/api/account'
 
 module Vscale
   module Api
     class Client
-
-      API_ENDPOINT = 'https://api.vscale.io/v1/'.freeze
-
-      VERB_MAP = {
-          :get    => Net::HTTP::Get,
-          :post   => Net::HTTP::Post,
-          :put    => Net::HTTP::Put,
-          :delete => Net::HTTP::Delete
-      }
-
+      include Request
+      include Tokens
+      include Account
       def initialize(token, api_endpoint = API_ENDPOINT)
         @token = token
         @api_endpoint = api_endpoint
 
         uri = URI.parse(@api_endpoint)
 
-        @http = Net::HTTP.start(uri.host, uri.port, :use_ssl => true)
+        @http = Net::HTTP.start(uri.host, uri.port, use_ssl: true)
         @http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-        @http.ssl_version = :TLSv1_2 #:SSLv23
-      end
-
-      def get(path, params = {})
-        request_json :get, path, params
-      end
-
-      def post(path, params = {})
-        request_json :post, path, params
-      end
-
-      def put(path, params = {})
-        request_json :put, path, params
-      end
-
-      def delete(path, params = {})
-        request_json :delete, path, params
-      end
-
-      def patch(path, params = {})
-        request_json :patch, path, params
-      end
-
-      ### TOKENS
-      def tokens(params={})
-        if params.empty?
-          self.get("tokens")
-        else
-          self.post("tokens", params)
-        end
-      end
-
-      def find_token(id)
-        self.get("tokens/#{id}")
-      end
-
-      def update_token(id, params)
-        self.post("tokens/#{id}", params)
-      end
-
-      def remove_token(id)
-        self.delete("tokens/#{id}")
-      end
-
-
-      ### ACCOUNT
-      def account
-        self.get("account")
-      end
-
-      def auth
-        #self.request ({:method => 'auth'})
-        self.get("auth")
+        @http.ssl_version = :TLSv1_2
       end
 
       ### SERVERS
-      # GET
-      def scalets #alias scalets
-        self.get("scalets")
-        #https://api.vscale.io/v1/scalets
+      def scalets # TODO: alias scalets
+        # https://api.vscale.io/v1/scalets
+        get('scalets')
       end
 
-      # POST
-      def new_scalet(params = {}) # alias Vscale::API::Scalets.new(params)
-        #https://api.vscale.io/v1/scalets
-        self.post("scalets", params)
+      def new_scalet(params = {}) # TODO: alias Vscale::API::Scalets.new(params)
+        # https://api.vscale.io/v1/scalets
+        post('scalets', params)
       end
 
-      # GET :id
-      def find_scalet(id) # alias :scalet_info
-        self.get("scalets/#{id}")
-        #https://api.vscale.io/v1/scalets/:ctid
+      def find_scalet(id) # TODO: alias :scalet_info
+        # https://api.vscale.io/v1/scalets/:ctid
+        get("scalets/#{id}")
       end
 
-      # PATCH
       def restart_scalet(id)
-        #https://api.vscale.io/v1/scalets/:ctid/restart
-        self.patch("scalets/#{id}/restart")
+        # https://api.vscale.io/v1/scalets/:ctid/restart
+        patch("scalets/#{id}/restart")
       end
 
-      # PATCH
       def stop_scalet(id)
-        self.patch("scalets/#{id}/stop")
-        #https://api.vscale.io/v1/scalets/:ctid/stop
+        # https://api.vscale.io/v1/scalets/:ctid/stop
+        patch("scalets/#{id}/stop")
       end
 
-      # PATCH
       def start_scalet(id)
-        self.patch("scalets/#{id}/start")
-        #https://api.vscale.io/v1/scalets/:ctid/start
+        # https://api.vscale.io/v1/scalets/:ctid/start
+        patch("scalets/#{id}/start")
       end
 
-      # POST
       def upgrade_scalet(id, params)
-        self.post("scalets/#{id}/upgrade", params)
         # https://api.vscale.io/v1/scalets/:ctid/upgrade
+        post("scalets/#{id}/upgrade", params)
       end
 
-      # DELETE
       def delete_scalet(id)
         # https://api.vscale.io/v1/scalets/:ctid
-        self.delete("scalets/#{id}")
+        delete("scalets/#{id}")
       end
 
-      # GET
       def task
         # https://api.vscale.io/v1/tasks
-        self.get("tasks")
+        get('tasks')
       end
 
-      # PATCH
       def scalet_sshkeys(params)
-        self.patch("sshkeys/scalets/#{id}", params)
         # https://api.vscale.io/v1/sshkeys/scalets/:ctid
+        patch("sshkeys/scalets/#{id}", params)
       end
-
 
       ### BACKGROUND
-      # GET
       def locations
-        self.get("locations")
-        #https://api.vscale.io/v1/locations
+        # https://api.vscale.io/v1/locations
+        get('locations')
       end
 
-      # GET
       def images
-        self.get("images")
-        #https://api.vscale.io/v1/images
+        # https://api.vscale.io/v1/images
+        get('images')
       end
-
 
       ### CONFIGURATIONS
-      # GET
       def rplans
-        self.get("rplans")
-        #https://api.vscale.io/v1/rplans
+        # https://api.vscale.io/v1/rplans
+        get('rplans')
       end
 
-      # GET
       def prices
-        self.get("billing/prices")
-        #https://api.vscale.io/v1/billing/prices
+        # https://api.vscale.io/v1/billing/prices
+        get('billing/prices')
       end
-
 
       ### SSHKEYS
-      # GET
       def sshkeys
-        self.get("sshkeys")
-        #https://api.vscale.io/v1/sshkeys
+        # https://api.vscale.io/v1/sshkeys
+        get('sshkeys')
       end
 
-      # POST
       def sshkeys_new(params)
-        self.post("sshkeys", params)
-        #https://api.vscale.io/v1/sshkeys
+        # https://api.vscale.io/v1/sshkeys
+        post('sshkeys', params)
       end
 
-      # DELETE
       def sshkeys_delete(id)
-        self.delete("sshkeys/#{id}")
-        #https://api.vscale.io/v1/sshkeys/:key
+        # https://api.vscale.io/v1/sshkeys/:key
+        delete("sshkeys/#{id}")
       end
-
 
       ### BILLING
-      # GET
       def payments
-        #https://api.vscale.io/v1/billing/payments
-        self.get("billing/payments")
+        # https://api.vscale.io/v1/billing/payments
+        get('billing/payments')
       end
 
-      # GET
       def consumption(params)
-        #https://api.vscale.io/v1/billing/consumption?start=&end=
-        self.get("billing/consumption", params)
+        # https://api.vscale.io/v1/billing/consumption?start=&end=
+        get('billing/consumption', params)
       end
-
 
       ### TICKETS
-      # GET
       def tickets
-        #https://api.vscale.io/v1/tickets
-        self.get("tickets")
+        # https://api.vscale.io/v1/tickets
+        get('tickets')
       end
 
-      # POST
       def tickets_new(params)
-        #https://api.vscale.io/v1/tickets
-        self.post("tickets", params)
+        # https://api.vscale.io/v1/tickets
+        post('tickets', params)
       end
 
-      # GET
       def ticket_comments
-        #https://api.vscale.io/v1/tickets/:id/comments
-        self.get("tickets/#{id}/comments")
+        # https://api.vscale.io/v1/tickets/:id/comments
+        get("tickets/#{id}/comments")
       end
 
-      # POST
       def tickets_add_comment(params)
-        #https://api.vscale.io/v1/tickets/:id/comments
-        self.post("tickets", params)
+        # https://api.vscale.io/v1/tickets/:id/comments
+        post('tickets', params)
       end
 
-      # POST
       def tickets_close(id)
-        #https://api.vscale.io/v1/tickets/:id/close
-        self.post("tickets/#{id}/close")
+        # https://api.vscale.io/v1/tickets/:id/close
+        post("tickets/#{id}/close")
       end
-
 
       private
 
       def request_json(method, path, params)
         response = request(method, path, params)
-
         body = JSON.parse(response.body)
 
-        OpenStruct.new(:code => response.code, :body => body)
+        OpenStruct.new(code: response.code, body: body)
 
       rescue JSON::ParserError
         response
       end
 
       def request(method, path, params = {})
-        case method
-          when :get
-            full_path = encode_path_params(@api_endpoint + path, params)
-            request = VERB_MAP[method.to_sym].new(full_path)
-            request["Accept"] = "application/json, text/plain"
-            request["Content-Type"] = 'application/json'
-            request["X-Token"] = @token
-            p full_path # TODO: development
-          else
-            full_path = encode_path_params(@api_endpoint + path, params)
-            request = VERB_MAP[method.to_sym].new(full_path)
-            request["Accept"] = "application/json, text/plain"
-            request["Content-Type"] = 'application/json'
-            request["X-Token"] = @token
-            p full_path # TODO: development
-        end
-
+        full_path = encode_path_params(@api_endpoint + path, params)
+        request = VERB_MAP[method.to_sym].new(full_path)
+        request['Accept'] = 'application/json, text/plain'
+        request['Content-Type'] = 'application/json'
+        request['X-Token'] = @token
         @http.request(request)
       end
 
       def encode_path_params(path, params)
         encoded = URI.encode_www_form(params)
-        [path, encoded].join("?") # if params  {}
+        [path, encoded].join('?')
       end
-
     end
   end
 end
-
