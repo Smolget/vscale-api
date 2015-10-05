@@ -6,6 +6,7 @@ module Vscale
       get: Net::HTTP::Get,
       put: Net::HTTP::Put,
       post: Net::HTTP::Post,
+      patch: Net::HTTP::Patch,
       delete: Net::HTTP::Delete
     }
 
