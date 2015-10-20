@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-# describe Vscale::API::Client.new('aaadd5efec650f0218276a5833651ef95024bacc258a
-# 91868b5aa3d5acaef076') do
-#  pending 'write it'
-# end
+describe Vscale::API::Client.new('2627bf1dc02449d7bba8e4368a521c612b097878df5241be1bb49325471c966f') do
+  pending 'write it'
+end

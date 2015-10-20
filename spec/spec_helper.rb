@@ -1,6 +1,8 @@
 require 'bundler/setup'
-require 'coveralls'
 Bundler.setup
+
+
+require 'coveralls'
 Coveralls.wear!
 
 require 'vscale/api'

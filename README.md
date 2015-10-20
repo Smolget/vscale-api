@@ -1,3 +1,22 @@
 ### WIP
 
 [![Coverage Status](https://coveralls.io/repos/Smolget/vscale-api/badge.svg?branch=master&service=github)](https://coveralls.io/github/Smolget/vscale-api?branch=master)
+[![Build Status](https://travis-ci.org/Smolget/vscale-api.svg?branch=master)](https://travis-ci.org/Smolget/vscale-api)
+
+[![Gem Version](https://badge.fury.io/rb/vscale-api.svg)](https://badge.fury.io/rb/vscale-api)
+
+## Vscale API v1  
+
+## Installation  
+```ruby
+  gem install vscale-api
+```
+
+## Contribution  
+
+01. Fork  
+02. Change  
+03. PR  
+
+
+*WIP*
