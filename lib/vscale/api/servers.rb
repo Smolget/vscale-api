@@ -4,7 +4,7 @@ module Vscale
       get('scalets')
     end
 
-    def new_scalet(params = {}) # TODO: alias Vscale::API::Scalets.new(params)
+    def new_scalet(params = {}) # TODO: alias Vscale::Api::Scalets.new(params)
       post('scalets', params)
     end
 
@@ -32,11 +32,11 @@ module Vscale
       delete("scalets/#{id}")
     end
 
-    def task
+    def tasks
       get('tasks')
     end
 
-    def scalet_sshkeys(params)
+    def scalet_sshkeys(id, params)
       patch("sshkeys/scalets/#{id}", params)
     end
   end

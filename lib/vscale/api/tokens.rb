@@ -1,3 +1,4 @@
+# deprecated methods
 module Vscale
   module Tokens
     def tokens(params = {})
