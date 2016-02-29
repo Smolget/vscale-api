@@ -59,12 +59,19 @@ module Vscale
         request['Accept'] = 'application/json, text/plain'
         request['Content-Type'] = 'application/json'
         request['X-Token'] = @token
+        puts '-------DEBUG-------'
+        puts full_path
+        puts request
+        puts '==================='
         @http.request(request)
       end
 
       def encode_path_params(path, params)
+        # if not params.empty?
         encoded = URI.encode_www_form(params)
         [path, encoded].join('?')
+        # end
+        # [path, encoded].join('')
       end
     end
   end
