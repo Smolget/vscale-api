@@ -1,7 +1,6 @@
 module Vscale
   module Domains
     def domains(params = {})
-      # get('domains/')
       params.empty? ? get('domains/') : post('domains/', params)
     end
 
@@ -69,6 +68,7 @@ module Vscale
     alias_method :rm_tag, :delete_tag
 
     # PTR Records
+
     def add_domain_ptr(params)
       post('domains/ptr/', params)
     end
