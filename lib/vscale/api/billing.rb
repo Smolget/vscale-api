@@ -1,7 +1,7 @@
 module Vscale
   module Billing
     def payments
-      get('billing/payments')
+      get('billing/payments/')
     end
 
     def consumption(params)
