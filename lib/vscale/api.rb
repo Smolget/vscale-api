@@ -8,6 +8,7 @@ require 'vscale/api/account'
 require 'vscale/api/background'
 require 'vscale/api/billing'
 require 'vscale/api/configurations'
+require 'vscale/api/domains'
 require 'vscale/api/request'
 require 'vscale/api/servers'
 require 'vscale/api/sshkeys'
@@ -22,6 +23,7 @@ module Vscale
       include Background
       include Billing
       include Configurations
+      include Domains
       include Request
       include Servers
       include SSHKeys
