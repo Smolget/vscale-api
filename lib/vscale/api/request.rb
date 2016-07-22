@@ -22,7 +22,7 @@ module Vscale
       request_json :put, path, params
     end
 
-    def delete(path, params = {})
+    def delete(path)
       request_json :delete, path, params
     end
 

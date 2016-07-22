@@ -29,10 +29,10 @@ module Vscale
     alias_method :rm_domain, :remove_domain
 
     ##  Domains Records
- 
+
     def domain_records(domain_id)
       get("domains/#{domain_id}/records/")
-    end 
+    end
 
     def add_domain_record(domain_id, params = {})
       post("domains/#{domain_id}/records/", params)
@@ -65,22 +65,21 @@ module Vscale
     end
 
     def update_domains_tag(tag_id, params = {})
-      put("domains/tags/#{tag_id}")
+      put("domains/tags/#{tag_id}", params)
     end
 
-    def remove_domains_tag(tag_id, params = {})
+    def remove_domains_tag(tag_id)
       delete("domains/tags/#{tag_id}")
     end
-
 
     ## PTR Records
 
     def add_domains_ptr(params = {})
-      post("domains/ptr/", params)
+      post('domains/ptr/', params)
     end
 
     def domains_ptr
-      get("domains/ptr/")
+      get('domains/ptr/')
     end
 
     def domains_ptr_id(ptr_id)
