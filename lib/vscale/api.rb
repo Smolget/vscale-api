@@ -6,6 +6,7 @@ require 'uri'
 
 require 'vscale/api/account'
 require 'vscale/api/background'
+require 'vscale/api/backups'
 require 'vscale/api/billing'
 require 'vscale/api/configurations'
 require 'vscale/api/domains'
@@ -24,6 +25,7 @@ module Vscale
     class Client
       include Account
       include Background
+      include Backups
       include Billing
       include Configurations
       include Domains
