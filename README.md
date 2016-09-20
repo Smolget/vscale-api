@@ -30,4 +30,9 @@ api.images
 02. Change  
 03. PR  
 
+## TODO
+* [ ] Refactoring
+* [ ] Usage examples
+* [ ] Tests
+
 *WIP*
