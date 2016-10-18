@@ -4,8 +4,6 @@ rvm:
   - 2.2
   - 2.3
 
-cache: bundler
-
 sudo: false
 
 script: rspec spec
