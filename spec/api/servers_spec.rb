@@ -80,16 +80,12 @@ describe Vscale::Servers do
     end
   end
 
-  # Looks like servers.rb had an error when I wrote this
-  # Assuming it follows all other calls,
-  # you should be able to uncomment once it's ready:
-
-  # describe "#scalet_sshkeys" do
-  #   it "calls #patch with the correct url and params" do
-  #     scalet_id = 90210
-  #     params = {:hello => :world}
-  #     @api.should_receive(:patch).with("sshkeys/scalets/90210",params)
-  #     @api.scalet_sshkeys scalet_id, params
-  #   end
-  # end
+  describe "#scalet_sshkeys" do
+    it "calls #patch with the correct url and params" do
+      scalet_id = 90210
+      params = {:hello => :world}
+      @api.should_receive(:patch).with("sshkeys/scalets/90210",params)
+      @api.scalet_sshkeys scalet_id, params
+    end
+  end
 end

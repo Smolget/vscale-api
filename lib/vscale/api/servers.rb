@@ -36,7 +36,7 @@ module Vscale
       get('tasks')
     end
 
-    def scalet_sshkeys(params)
+    def scalet_sshkeys(id, params)
       patch("sshkeys/scalets/#{id}", params)
     end
   end
