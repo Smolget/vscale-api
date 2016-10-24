@@ -1,6 +1,6 @@
 ### VScale API v1 (WIP)
 
-[![Coverage Status](https://coveralls.io/repos/Smolget/vscale-api/badge.svg?branch=master&service=github)](https://coveralls.io/github/Smolget/vscale-api?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/Smolget/vscale-api/badge.svg?branch=feature%2Fcoveralls)](https://coveralls.io/github/Smolget/vscale-api?branch=feature%2Fcoveralls)
 [![Build Status](https://travis-ci.org/Smolget/vscale-api.svg?branch=master)](https://travis-ci.org/Smolget/vscale-api)
 [![Gem Version](https://badge.fury.io/rb/vscale-api.svg)](https://badge.fury.io/rb/vscale-api)
 ![](http://ruby-gem-downloads-badge.herokuapp.com/vscale-api?type=total)  
