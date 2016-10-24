@@ -80,12 +80,52 @@ describe Vscale::Servers do
     end
   end
 
-  describe "#scalet_sshkeys" do
-    it "calls #patch with the correct url and params" do
+  describe '#scalet_sshkeys' do
+    it 'calls #patch with the correct url and params' do
       scalet_id = 90210
       params = {:hello => :world}
-      @api.should_receive(:patch).with("sshkeys/scalets/90210",params)
+      @api.should_receive(:patch).with('sshkeys/scalets/90210',params)
       @api.scalet_sshkeys scalet_id, params
+    end
+  end
+
+  describe '#add_scalet_tag' do
+    it 'calls #post with correct url and params' do
+      params = { :name => 'new_tag', :scalets => [42, 50] }
+      @api.should_receive(:post).with('scalets/tags', params)
+      @api.add_scalet_tag params
+    end
+  end
+
+  describe '#scalets_tags' do
+    it 'calls #get with correct url' do
+      @api.should_receive(:get).with('scalets/tags')
+      @api.scalets_tags
+    end
+  end
+
+  describe '#scalet_tag' do
+    it 'calls #get with correct url' do
+      tag_id = 20
+      @api.should_receive(:get).with('scalets/tags/20')
+      @api.scalet_tag tag_id
+    end
+  end
+
+  describe '#update_scalet_tag' do
+    it 'calls #put with correct url and params' do
+      tag_id = 20
+      params = { :name => 'new_tag', :scalets => [1, 2, 3] }
+      @api.should_receive(:put).with('scalets/tags/20', params)
+      @api.update_scalet_tag tag_id, params
+    end
+  end
+
+  describe '#remove_scalet_tag' do
+    it 'call #delete with correct url' do
+      tag_id = 20
+      @api.should_receive(:delete).with('scalets/tags/20')
+      @api.remove_scalet_tag tag_id
     end
   end
 end

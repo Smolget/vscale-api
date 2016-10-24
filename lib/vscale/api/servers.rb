@@ -39,5 +39,25 @@ module Vscale
     def scalet_sshkeys(id, params)
       patch("sshkeys/scalets/#{id}", params)
     end
+
+    def add_scalet_tag(params)
+      post('scalets/tags', params)
+    end
+
+    def scalets_tags
+      get('scalets/tags')
+    end
+
+    def scalet_tag(tag_id)
+      get("scalets/tags/#{tag_id}")
+    end
+
+    def update_scalet_tag(tag_id, params)
+      put("scalets/tags/#{tag_id}", params)
+    end
+
+    def remove_scalet_tag(tag_id)
+      delete("scalets/tags/#{tag_id}")
+    end
   end
 end
