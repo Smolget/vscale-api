@@ -1,6 +1,5 @@
 require 'net/http'
 require 'openssl'
-require 'ostruct'
 require 'json'
 require 'uri'
 
@@ -34,11 +33,10 @@ module Vscale
       include Servers
       include SSHKeys
 
-      def initialize(token, api_endpoint = API_ENDPOINT)
+      def initialize(token)
         @token = token
-        @api_endpoint = api_endpoint
 
-        uri = URI.parse(@api_endpoint)
+        uri = URI.parse(API_ENDPOINT)
 
         # TODO: rescue StandardError
         @http = Net::HTTP.start(uri.host, uri.port, use_ssl: true)
@@ -50,27 +48,35 @@ module Vscale
 
       def request_json(meth, path, params = {})
         response = request(meth, path, params)
-        body     = JSON.parse(response.body)
-        OpenStruct.new(code: response.code, body: body)
-      rescue JSON::ParserError
-        response # TODO: convert to Hash
+
+        result = Struct.new(:code, :body)
+
+        if response.body.nil? || response.body.empty?
+          result.new(nil, nil)
+        else
+          json_body = JSON.parse(response.body, quirks_mode: true) # TODO: TypeError if nil
+          result.new(response.code, json_body)
+        end
       end
 
       def request(meth, path, params = {})
-        full_path = encode_path_params(@api_endpoint + path, params)
+        full_path = encode_path_params([API_ENDPOINT, path].join, params)
+        
         request = VERB_MAP[meth.to_sym].new(full_path)
+        
         request['Accept'] = 'application/json, text/plain'
         request['Content-Type'] = 'application/json'
         request['X-Token'] = @token
 
-        request.set_form_data(params) if ['post', 'put', 'patch'].include?(meth)
-
+        if ['post', 'put', 'patch'].include?(meth.to_s)
+          request.body = params.to_json
+          return @http.request(request)
+        end
         @http.request(request)
       end
 
       def encode_path_params(path, params)
-        encoded = URI.encode_www_form(params)
-        [path, encoded].join('?')
+        [path, URI.encode_www_form(params)].join('?')
       end
     end
   end
