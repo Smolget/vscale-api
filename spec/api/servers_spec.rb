@@ -116,7 +116,7 @@ describe Vscale::Servers do
     it 'calls #put with correct url and params' do
       tag_id = 20
       params = { :name => 'new_tag', :scalets => [1, 2, 3] }
-      @api.should_receive(:put).with('scalets/tags/20')
+      @api.should_receive(:put).with('scalets/tags/20', params)
       @api.update_scalet_tag tag_id, params
     end
   end

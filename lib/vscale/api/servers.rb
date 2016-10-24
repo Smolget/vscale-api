@@ -45,7 +45,7 @@ module Vscale
     end
 
     def scalets_tags
-      get('scalet/tags')
+      get('scalets/tags')
     end
 
     def scalet_tag(tag_id)
