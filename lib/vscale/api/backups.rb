@@ -1,7 +1,11 @@
 module Vscale
   module Backups
-    def create_backup(scalet_id)
-      post("#{scalet_id}/backup")
+    def create_backup(scalet_id, params)
+      post("#{scalet_id}/backup", params)
+    end
+
+    def create_from_backup(scalet_id, params)
+      patch("#{scalet_id}/rebuild", params)
     end
 
     def backups
