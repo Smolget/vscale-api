@@ -29,4 +29,13 @@ describe Vscale::Backups do
       @api.delete_backup backup_id
     end
   end
+
+  describe '#create_backup' do
+    it 'calls #post with the correct url and params' do
+      scalet_id = 98
+      params = { :name => "My Backup" }
+      @api.should_receive(:post).with('98/backup', params)
+      @api.create_backup scalet_id, params
+    end
+  end
 end
