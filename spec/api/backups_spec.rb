@@ -33,7 +33,7 @@ describe Vscale::Backups do
   describe '#create_backup' do
     it 'calls #post with the correct url and params' do
       scalet_id = 98
-      params = { :name => "My Backup" }
+      params = { :name => 'My Backup' }
       @api.should_receive(:post).with('98/backup', params)
       @api.create_backup scalet_id, params
     end
@@ -41,11 +41,11 @@ describe Vscale::Backups do
 
   describe '#create_from_backup' do
     it 'calls #patch with the correct url and params' do
-      scalet_id = 42590
-      params = { 
-        :make_from => "294374c0-0fb9-4ab6-853c-e0a11fde4906" 
+      scalet_id = 42
+      params = {
+        :make_from => '294374c0-0fb9-4ab6-853c-e0a11fde4906'
       }
-      @api.should_receive(:post).with('42590/rebuild', params)
+      @api.should_receive(:post).with('scalets/42/rebuild', params)
       @api.create_from_backup scalet_id, params
     end
   end

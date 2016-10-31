@@ -5,7 +5,7 @@ module Vscale
     end
 
     def create_from_backup(scalet_id, params)
-      patch("#{scalet_id}/rebuild", params)
+      patch("scalets/#{scalet_id}/rebuild", params)
     end
 
     def backups
@@ -16,8 +16,8 @@ module Vscale
       get("backups/#{id}")
     end
 
-    def delete_backup(backup_id, params)
-      delete("backups/#{backup_id}", params)
+    def delete_backup(backup_id)
+      delete("backups/#{backup_id}")
     end
   end
 end
