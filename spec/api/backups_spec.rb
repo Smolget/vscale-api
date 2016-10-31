@@ -45,7 +45,7 @@ describe Vscale::Backups do
       params = {
         :make_from => '294374c0-0fb9-4ab6-853c-e0a11fde4906'
       }
-      @api.should_receive(:post).with('scalets/42/rebuild', params)
+      @api.should_receive(:patch).with('scalets/42/rebuild', params)
       @api.create_from_backup scalet_id, params
     end
   end
