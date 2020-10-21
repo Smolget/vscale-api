@@ -12,7 +12,7 @@
   gem install vscale-api
 ```
 
-## Basic Usage
+## Basic Usage 
 
 ```ruby
 
@@ -24,6 +24,7 @@ api = Vscale::Api::Client.new(ENV['VSCALE_TOPSECRET_TOKEN'])
 api.images
 
 ```
+See [examples](https://github.com/Smolget/vscale-api/tree/master/examples)
 
 ## Contribution  
 
@@ -31,9 +32,15 @@ api.images
 02. Change  
 03. PR  
 
-## TODO
-* [ ] Refactoring
-* [ ] Usage examples
-* [ ] Tests
+## What you can improve
+  - Add more examples
+  - Improve or refactor any part of code 😋
+
+## Thank for contribution
+  - [noma4i](https://github.com/noma4i)  
+  - [Shalmezad](https://github.com/Shalmezad)  
+
+## Where used
+  - [infra-vscale](https://github.com/d-theus/infra-vscale)
 
 *WIP*
