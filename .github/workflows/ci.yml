@@ -17,9 +17,10 @@ jobs:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
     - name: RSpec testing
-      run: JRUBY_OPTS="--dev --debug" bundle exec rspec
+      run: |
+        JRUBY_OPTS="--dev --debug" bundle exec rspec --color --format documentation
     - name: Coveralls Parallel
-      uses: coverallsapp/github-action@master
+      uses: coverallsapp/github-action@1.1.3
       with:
         github-token: ${{ secrets.github_token }}
         flag-name: run-${{ matrix.ruby-version }}
@@ -30,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Coveralls Finished
-      uses: coverallsapp/github-action@master
+      uses: coverallsapp/github-action@1.1.3
       with:
         github-token: ${{ secrets.github_token }}
         parallel-finished: true
