@@ -2,8 +2,10 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require 'vscale/api'
-require 'coveralls'
-Coveralls.wear!
+# require 'coveralls'
+require 'simplecov'
+# SimpleCov.start
+# Coveralls.wear!
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
