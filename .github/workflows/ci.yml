@@ -1,27 +1,43 @@
-name: RSpec testing
+name: Tests
+
 on: [push, pull_request]
+
 jobs:
   test:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
-          # - macos-latest
-        ruby: ['2.5']
-          # - '2.5'
-          # - '2.7'
-          # - '3.0'
-          # - '3.1'
-          # - head 
-          # - jruby
-          # - jruby-head
-          # - truffleruby
-          # - truffleruby-head
+        os: [ubuntu-latest, macos-latest]
+        ruby: ['2.5', '2.7', '3.0', '3.1', 'head', 'jruby', 'jruby-head', 'truffleruby', 'truffleruby-head']
     runs-on: ${{ matrix.os }}
+
+    continue-on-error: true
+
     steps:
     - uses: actions/checkout@v3
+    - name: Set up Ruby
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
-    - run: bundle exec rspec
+
+    - name: RSpec testing
+      run: JRUBY_OPTS="--dev --debug" bundle exec rake rspec
+
+    - name: Coveralls Parallel
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.github_token }}
+        flag-name: run-${{ matrix.ruby-version }}
+        parallel: true
+
+  coverage:
+    name: Coverage
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.github_token }}
+        parallel-finished: true
