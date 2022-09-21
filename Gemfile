@@ -4,7 +4,10 @@ gemspec
 group :development do
   gem 'guard-rspec', require: false
   gem 'guard-rubocop'
-  gem 'coveralls', require: false
-  gem 'simplecov',      require: false
-  gem 'simplecov-lcov', require: false
+  gem 'undercover'
+end
+
+group :test do
+  gem 'simplecov'
+  gem 'simplecov-lcov'
 end
