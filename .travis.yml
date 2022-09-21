@@ -1,0 +1,13 @@
+language: ruby
+
+rvm:
+  - 2.2.5
+
+script: rspec spec
+
+notifications:
+  email:
+    recipients:
+      - ilya@codeplay.ru
+    on_failure: change
+    on_success: never
