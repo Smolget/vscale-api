@@ -3,12 +3,12 @@ on: [push, pull_request]
 jobs:
   test:
     name: Tests
-    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        ruby: ['2.5', '2.7', '3.0', '3.1', 'head', 'jruby', 'jruby-head', 'truffleruby', 'truffleruby-head']
+        ruby: ['2.5', '2.7', '3.0', '3.1', head, jruby, jruby-head, truffleruby, truffleruby-head]
+    runs-on: ${{ matrix.os }}
     continue-on-error: true
     steps:
     - uses: actions/checkout@v3
@@ -17,16 +17,14 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
-
     - name: RSpec testing
-      run: JRUBY_OPTS="--dev --debug" bundle exec rake rspec
+    - run: JRUBY_OPTS="--dev --debug" bundle exec rake rspec
     - name: Coveralls Parallel
     - uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.github_token }}
         flag-name: run-${{ matrix.ruby-version }}
         parallel: true
-
   coverage:
     name: Coverage
     needs: test
