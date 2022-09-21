@@ -1,7 +1,5 @@
-name: Tests
-
+name: Ruby specs
 on: [push, pull_request]
-
 jobs:
   test:
     name: Tests
