@@ -14,7 +14,6 @@ end
 
 SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
 SimpleCov.start do
-  add_filter(/^\/spec\//) # For RSpec
   add_filter(/^\/test\//) # For Minitest
   enable_coverage(:branch) # Report branch coverage to trigger branch-level undercover warnings
 end
