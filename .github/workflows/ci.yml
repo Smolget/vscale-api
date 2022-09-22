@@ -6,8 +6,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest] #, macos-latest]
-        ruby: ['2.5', '2.7'] #, '3.0', '3.1'] #, head, jruby, jruby-head, truffleruby, truffleruby-head]
+        os: [ubuntu-latest, macos-latest]
+        ruby: ['2.5', '2.7', '3.0', '3.1', head, jruby, jruby-head, truffleruby, truffleruby-head]
     runs-on: ${{ matrix.os }}
     continue-on-error: true
     steps:
